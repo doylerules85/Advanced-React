@@ -1,3 +1,1 @@
-const Home = () => <div>HELLO</div>;
-
-export default Home;
+export { default } from './products';

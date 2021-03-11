@@ -22,19 +22,19 @@ function MyApp({ Component, pageProps, apollo }) {
 }
 
 MyApp.propTypes = {
-  Component: PropTypes.node,
+  Component: PropTypes.any,
   pageProps: PropTypes.any,
 };
 
 // get queries from a page level "/products/2" -> query to fetch and show that data
 // ctx means context
-MyApp.getInitialProps() = async function(Component, ctx){
+MyApp.getInitialProps = async function ({ Component, ctx }) {
   let pageProps = {};
-  if(Component.getInitialProps){
-    pageProps = await Component.getInitialProps(ctx);  
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
   }
   pageProps.query = ctx.query;
-  return {pageProps};
-}
+  return { pageProps };
+};
 
 export default withData(MyApp);
