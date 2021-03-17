@@ -1,5 +1,35 @@
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
+import Router from 'next/router';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
+
+import DisplayError from './ErrorMessage';
+
+const CREATE_PRODUCT_MUTATION = gql`
+  mutation CREATE_PRODUCT_MUTATION(
+    #which variables are getting passed in? and what types are there?
+    $name: String!
+    $description: String!
+    $price: Int!
+    $image: Upload
+  ) {
+    createProduct(
+      data: {
+        name: $name
+        description: $description
+        price: $price
+        status: "AVAILABLE"
+        photo: { create: { image: $image, altText: $name } }
+      }
+    ) {
+      id
+      price
+      description
+      name
+    }
+  }
+`;
 
 function CreateProduct() {
   const { inputs, handleChange, clearForm, resetForm } = useForm({
@@ -8,14 +38,28 @@ function CreateProduct() {
     price: 2323,
     description: 'new description.',
   });
+
+  const [createProduct, { loading, error, data }] = useMutation(
+    CREATE_PRODUCT_MUTATION,
+    {
+      variables: inputs,
+    }
+  );
+
   return (
     <Form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        console.log(inputs);
+        await createProduct();
+        clearForm();
+        // go to the product page
+        Router.push({
+          pathname: `/product/${data.createProduct.id}`,
+        });
       }}
     >
-      <fieldset>
+      <DisplayError error={error} />
+      <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor="image">
           Image
           <input id="image" name="image" type="file" onChange={handleChange} />
