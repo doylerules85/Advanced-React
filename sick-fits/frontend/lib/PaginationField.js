@@ -1,13 +1,12 @@
-import gql from 'graphql-tag';
 import { ALL_PRODUCTS_QUERY } from '../components/Pagination';
 
-function PaginationField() {
+export default function PaginationField() {
   return {
     keyArgs: false, // tell apollo were taking care of it
     read(existing = [], { args, cache }) {
       const { skip, first } = args;
       // read the number of items from the cache
-      const data = cache.readQuery({ guery: ALL_PRODUCTS_QUERY });
+      const data = cache.readQuery({ query: ALL_PRODUCTS_QUERY });
       const count = data?._allProductsMeta?.count;
       const page = skip / first + 1;
       const pages = Math.ceil(count / first);
@@ -39,5 +38,3 @@ function PaginationField() {
     },
   };
 }
-
-export default PaginationField;
