@@ -19,7 +19,7 @@ const CartItemStyles = styled.li`
     margin: 0;
   }
 `;
-
+// component for cart item
 const CartItem = ({ cartItem }) => {
   const { product } = cartItem;
   return (
@@ -44,6 +44,7 @@ const CartItem = ({ cartItem }) => {
 
 export default function Cart() {
   const me = useUser();
+  // call the cart hook to get variables to update cart open state
   const { cartOpen, closeCart } = useCart();
   if (!me) {
     return <p>not signed in? sign in to save items in the cart</p>;
@@ -58,6 +59,7 @@ export default function Cart() {
       </header>
       <ul>
         {me.cart.map((cartItem) => (
+          // passing cartItem comppnent here
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </ul>

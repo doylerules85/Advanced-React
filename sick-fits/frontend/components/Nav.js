@@ -5,7 +5,9 @@ import NavStyles from './styles/NavStyles';
 import { useUser } from './User';
 
 const Nav = () => {
+  // access the user hook - get current user info
   const user = useUser();
+  // grab the cart hook and access toggleCart
   const { toggleCart } = useCart();
   return (
     <NavStyles>

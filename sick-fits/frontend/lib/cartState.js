@@ -1,11 +1,16 @@
 import { useState, useContext, createContext } from 'react';
 
+// create the context
 const LocalStateContext = createContext();
 
+// add provider and attach context - storing in variable to avoid dot notation component
 const LocalStateProvider = LocalStateContext.Provider;
 
 function CartStateProvider({ children }) {
+  // setting up the local state available within provider
   const [cartOpen, setCartOpen] = useState(false);
+
+  // helper function you can add in provider
   function toggleCart() {
     return setCartOpen(!cartOpen);
   }
@@ -16,6 +21,7 @@ function CartStateProvider({ children }) {
     return setCartOpen(true);
   }
   return (
+    // passing our values thru value prop
     <LocalStateProvider
       value={{ cartOpen, setCartOpen, toggleCart, closeCart, openCart }}
     >
