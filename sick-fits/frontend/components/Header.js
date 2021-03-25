@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styled from 'styled-components';
+import Cart from './Cart';
 import Nav from './Nav';
 
 const Logo = styled.h1`
@@ -39,6 +40,7 @@ const Header = () => (
       <Nav />
     </div>
     <div className="search">search</div>
+    <Cart />
   </HeaderStyles>
 );
 
