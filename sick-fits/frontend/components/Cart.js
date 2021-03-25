@@ -3,6 +3,8 @@ import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';
 import { useUser } from './User';
 import formatMoney from '../lib/formatMoney';
+import calcTotalPrice from '../lib/calcTotalPrice';
+import { useCart } from '../lib/cartState';
 
 const CartItemStyles = styled.li`
   padding: 1rem 0;
@@ -42,19 +44,26 @@ const CartItem = ({ cartItem }) => {
 
 export default function Cart() {
   const me = useUser();
+  const { cartOpen, closeCart } = useCart();
   if (!me) {
     return <p>not signed in? sign in to save items in the cart</p>;
   }
   return (
-    <CartStyles open>
+    <CartStyles open={cartOpen}>
       <header>
         <Supreme>{me.name}'s cart</Supreme>
+        <button type="button" onClick={closeCart}>
+          close cart yo
+        </button>
       </header>
       <ul>
         {me.cart.map((cartItem) => (
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </ul>
+      <footer>
+        <p>{formatMoney(calcTotalPrice(me.cart))}</p>
+      </footer>
     </CartStyles>
   );
 }
