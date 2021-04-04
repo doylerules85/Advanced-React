@@ -11,6 +11,7 @@ import { CartItem } from './schemas/CartItem';
 import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
+import { extendGraphqlSchema } from './mutations/index';
 
 const databseUrl =
     process.env.DATABASE_URL || 'mongodb://locahost/keystone-sick-fits-tut';
@@ -60,11 +61,11 @@ export default withAuth(
             ProductImage,
             CartItem,
         }),
+        extendGraphqlSchema,
         ui: {
-            isAccessAllowed: ({ session }) => {
-                console.log(session);
-                return !!session?.data;
-            },
+            isAccessAllowed: ({ session }) =>
+                // console.log(session);
+                !!session?.data,
         },
         session: withItemData(statelessSessions(sessionConfig), {
             // Graph QL Query Right Here
