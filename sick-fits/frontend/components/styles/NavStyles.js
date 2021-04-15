@@ -14,7 +14,7 @@ const NavStyles = styled.ul`
     position: relative;
     text-transform: uppercase;
     font-weight: 900;
-    font-size: 1em;
+    font-size: 1.25rem;
     background: none;
     cursor: pointer;
     @media (max-width: 700px) {
@@ -59,7 +59,7 @@ const NavStyles = styled.ul`
   @media (max-width: 1300px) {
     border-top: 1px solid var(--lightGray);
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.15rem;
   }
 `;
 
