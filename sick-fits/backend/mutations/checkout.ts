@@ -4,6 +4,7 @@ import { CartItemCreateInput } from '../.keystone/schema-types';
 import stripeConfig from '../lib/stripe';
 import { Session } from '../types';
 
+// typescript set up for token
 interface Arguments {
     token: string
 }
@@ -87,7 +88,7 @@ async function checkout(
         }
     });
     // clean up any old cart items
-    const cartItemsId = cartItems.map(cartItem => cartItem.id);
+    const cartItemsId = user.cart.map(cartItem => cartItem.id);
     await context.lists.CartItem.deleteMany({
         ids: cartItemsId
     });
