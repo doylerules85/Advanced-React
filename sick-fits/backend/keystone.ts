@@ -10,10 +10,12 @@ import { Product } from './schemas/Product';
 import { CartItem } from './schemas/CartItem';
 import { OrderItem } from './schemas/OrderItem';
 import { Order } from './schemas/Order';
+import { Role } from './schemas/Role';
 import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations/index';
+import { permissionsList } from './schemas/fields';
 
 const databseUrl =
   process.env.DATABASE_URL || 'mongodb://locahost/keystone-sick-fits-tut';
@@ -64,6 +66,7 @@ export default withAuth(
       CartItem,
       OrderItem,
       Order,
+      Role,
     }),
     extendGraphqlSchema,
     ui: {
@@ -73,7 +76,7 @@ export default withAuth(
     },
     session: withItemData(statelessSessions(sessionConfig), {
       // Graph QL Query Right Here
-      User: 'id',
+      User: `id name email role { ${permissionsList.join(' ')} }`,
     }),
   })
 );

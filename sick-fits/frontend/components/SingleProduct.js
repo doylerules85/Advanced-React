@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
+import formatMoney from '../lib/formatMoney';
+import AddToCart from './AddToCart';
 
 import DisplayError from './ErrorMessage';
 
@@ -9,6 +11,7 @@ const SINGLE_ITEM_QUERY = gql`
     Product(where: { id: $id }) {
       name
       id
+      price
       description
       photo {
         image {
@@ -57,7 +60,9 @@ export default function SingleProduct({ id }) {
       <img src={Product.photo.image.publicUrlTransformed} alt="text" />
       <div className="details">
         <h2>{Product.name}</h2>
+        <p>{formatMoney(Product.price)}</p>
         <p>{Product.description}</p>
+        <AddToCart id={Product.id} />
       </div>
     </ProductStyles>
   );

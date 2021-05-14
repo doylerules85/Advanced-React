@@ -60,7 +60,7 @@ export default function SingleOrderPage({ query }) {
       </div>
       <div>
         <span>ItemCount:</span>
-        <span>{order.items.count}</span>
+        <span>{order.items.length}</span>
       </div>
       <div className="items">
         {order.items.map((item) => (
@@ -69,7 +69,8 @@ export default function SingleOrderPage({ query }) {
             <div className="item-details">
               <h2>{item.name}</h2>
               <p>Qty: {item.quantity}</p>
-              <p>Price: {formatMoney(item.price * item.quantity)}</p>
+              <p>Price: {formatMoney(item.price)}</p>
+              <p>{item.description}</p>
             </div>
           </div>
         ))}
